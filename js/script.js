@@ -38,13 +38,16 @@ let budgetMonth = money - (amount1 + amount2);
 console.log("Количество месяцев для достижения цели: " + Math.ceil(mission / budgetMonth));
 budgetDay = (budgetMonth + income) / 30;
 console.log("Бюджет на день: " + Math.floor(budgetDay));
-if (budgetDay > 1200) 
+if (budgetDay > 1200) {
   console.log("У вас высокий уровень дохода");
-else 
-  if (budgetDay > 600) 
+} else {
+  if (budgetDay > 600) {
     console.log("У вас средний уровень дохода");
-  else
-    if (budgetDay > 0)
-      console.log("К сожалению у вас уровень дохода ниже среднего");
-    else
+  } else {
+    if (budgetDay > 0) {
+       console.log("К сожалению у вас уровень дохода ниже среднего");
+    } else {
       console.log("Что то пошло не так");
+    } 
+  }   
+}
