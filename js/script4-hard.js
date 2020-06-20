@@ -1,3 +1,5 @@
+"use strict";
+
 let myFun = function(val) {
   if (typeof(val) === "string") {
     alert("Это строка");
