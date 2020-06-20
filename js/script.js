@@ -65,7 +65,7 @@ showTypeOf(income,"income");
 showTypeOf(deposit,"deposit");
 console.log("Расходы за месяц: " + getExpensesMonth(amount1,amount2));
 console.log("Возможные расходы за месяц: ");
-console.log(addExpenses.toLowerCase().split(', '));
+console.log(addExpenses.toLowerCase().split(','));
 console.log("Срок достижения цели в месяцах: " + getTargetMonth(mission, accumulatedMonth));
 console.log("Бюджет на день: " + Math.floor(budgetDay)); 
 getStatusIncome(budgetDay);
