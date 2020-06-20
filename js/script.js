@@ -46,16 +46,19 @@ let showTypeOf = function(val, name) {
 }
 
 let getStatusIncome = function(budgDay) {
-  if (budgDay > 1200) 
-  console.log("У вас высокий уровень дохода");
-else 
-  if (budgDay > 600) 
-    console.log("У вас средний уровень дохода");
-  else
-    if (budgDay > 0)
-      console.log("К сожалению у вас уровень дохода ниже среднего");
-    else
-      console.log("Что то пошло не так");
+  if (budgDay > 1200) {
+    console.log("У вас высокий уровень дохода");
+  } else {
+    if (budgDay > 600) {
+      console.log("У вас средний уровень дохода");
+    } else {
+      if (budgDay > 0) {
+        console.log("К сожалению у вас уровень дохода ниже среднего");
+      } else {
+        console.log("Что то пошло не так");
+      }
+    } 
+  }
 }
 
 let budgetDay = accumulatedMonth / 30
