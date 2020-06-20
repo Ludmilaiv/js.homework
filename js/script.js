@@ -27,7 +27,7 @@ let  budgetDay = (money + income) / 30;
 console.log(`Дневной бюджет равен ${budgetDay} рублей`);
 
 //Lesson03
-money = parseFloat(prompt("Ваш ежемесячный доход?"),"50000");
+money = parseFloat(prompt("Ваш ежемесячный доход?","50000"));
 addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую","Интернет, Такси, Коммуналка, Курсы в GloAcademy");
 deposit = confirm("Есть ли у вас депозит в банке?");
 let expenses1 = prompt("Введите обязательную статью расходов","еда");
