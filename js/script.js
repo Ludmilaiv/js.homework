@@ -22,20 +22,36 @@ let appData = {
   expenses: {},
   addExpenses: [],
   deposit: false,
+  percentDoposit: 0,
+  moneyDeposit: 0,
   mission: 100000,
   period: 3,
   budgetDay: 0,
   budgetMonth: 0,
   expensesMonth: 0,
-  asking: function(){
+  asking: function() {
+    if(confirm("Есть ли у вас дополнительный заработок?")) {
+      let itemIncome;
+      let cashIncome;
+      do {
+        itemIncome = prompt("Какой у вас дополнительный заработок", "фриланс");
+      } while (isNumber(itemIncome));
+      do {
+        cashIncome = prompt("Сколько вы на этом закрабатываете в месяц?", 10000);
+      } while (!isNumber(cashIncome));
+      appData.income[itemIncome] = cashIncome;
+    }
+
     for (let i = 0; i < 3; i++) {
-      let key = prompt("Введите обязательную статью расходов");
+      let itemSpend;
       let spend;
       do {
+        itemSpend = prompt("Введите обязательную статью расходов");
+      } while (isNumber(itemSpend));
+      do {
         spend = prompt("Во сколько это обойдётся?");
-      }
-      while (!isNumber(spend));
-      appData.expenses[key] = +spend;
+      } while (!isNumber(spend));
+      appData.expenses[itemSpend] = +spend;
     }
     console.log("Обязательные статьи расходов")
     console.log(appData.expenses);
@@ -78,14 +94,34 @@ let appData = {
         }
       } 
     }
+  },
+  getInfoDeposit: function() {
+    if(appData.deposit) {
+      do {
+        appData.percentDoposit = prompt("Какой годовой процент депозита?", "10");
+      } while (!isNumber(appData.percentDoposit));
+      do {
+        appData.moneyDoposit = prompt("Какая сумма заложена?", "10000");
+      } while (!isNumber(appData.moneyDoposit));
+      
+    }
+  },
+  calcSavedMoney: function() {
+    return appData.budgetMonth * appData.period;
   }
 };
 
 appData.asking();
 appData.getExpensesMonth();
 appData.getBudget();
+appData.getInfoDeposit();
 console.log("Расходы за месяц: " + appData.expensesMonth);
 console.log("Возможные расходы за месяц: ");
+for (let key in appData.addExpenses) {
+  appData.addExpenses[key] = appData.addExpenses[key].trim();
+  appData.addExpenses[key] = appData.addExpenses[key][0].toUpperCase() + appData.addExpenses[key].slice(1);
+}
+console.log(appData.addExpenses.join(", "));
 console.log(appData.addExpenses);
 appData.getStatusIncome();
 console.log("Наша программа включает в себя данные:");
