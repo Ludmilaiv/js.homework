@@ -170,6 +170,15 @@ let appData = {
   setPeriod: function() {
     let periodTitle = document.querySelector(".title.period-amount");
     periodTitle.textContent = periodSelect.value;
+  },
+  blokedStartBtn: function() {
+    if (salaryAmount.value.trim() !== "") {
+      startBtn.removeAttribute("disabled")
+      startBtn.style.cursor = "pointer";
+    } else {
+      startBtn.setAttribute("disabled","true");
+      startBtn.style.cursor = "no-drop";
+    }
   }
 };
 
@@ -177,15 +186,7 @@ startBtn.addEventListener("click",appData.start);
 plus1.addEventListener("click",appData.addIncomesBlock);
 plus2.addEventListener("click",appData.addExpensesBlock);
 periodSelect.addEventListener("input",appData.setPeriod);
-salaryAmount.addEventListener("input",function() {
-  if (salaryAmount.value.trim() !== "") {
-    startBtn.disabled = "false";
-    startBtn.style.cursor = "pointer";
-  } else {
-    startBtn.disabled = "true";
-    startBtn.style.cursor = "no-drop";
-  }
-})
+salaryAmount.addEventListener("input",appData.blokedStartBtn);
 
 startBtn.disabled = "true";
 startBtn.style.cursor = "no-drop";
