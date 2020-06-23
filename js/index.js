@@ -15,6 +15,8 @@ const targetAmount = document.querySelector('.target-amount');
 const addExpensesItem = document.querySelector('.additional_expenses-item');
 const periodSelect = document.querySelector(".period-select");
 let incomeItems = document.querySelectorAll(".income-items");
+const inputsTitle = document.querySelectorAll("input[placeholder='Наименование']");
+const inputsAmount = document.querySelectorAll("input[placeholder='Сумма']");
 
 "use strict";
 
@@ -65,6 +67,9 @@ let appData = {
   },
   addIncomesBlock: function() {
     let cloneIncomeItem = incomeItems[0].cloneNode(true);
+    let inputs = cloneIncomeItem.querySelectorAll("input");
+    inputs[0].value = "";
+    inputs[1].value = "";
     incomeItems[0].parentNode.insertBefore(cloneIncomeItem, plus1);
     incomeItems = document.querySelectorAll(".income-items");
     if(incomeItems.length === 3) {
@@ -73,6 +78,9 @@ let appData = {
   },
   addExpensesBlock: function() {
     let cloneExpensesItem = expensesItems[0].cloneNode(true);
+    let inputs = cloneExpensesItem.querySelectorAll("input");
+    inputs[0].value = "";
+    inputs[1].value = "";
     expensesItems[0].parentNode.insertBefore(cloneExpensesItem, plus2);
     expensesItems = document.querySelectorAll(".expenses-items");
     if(expensesItems.length === 3) {
@@ -170,6 +178,21 @@ let appData = {
   setPeriod: function() {
     let periodTitle = document.querySelector(".title.period-amount");
     periodTitle.textContent = periodSelect.value;
+  },
+  blokedStartBtn: function() {
+    if (salaryAmount.value.trim() !== "") {
+      startBtn.removeAttribute("disabled")
+      startBtn.style.cursor = "pointer";
+    } else {
+      startBtn.setAttribute("disabled","true");
+      startBtn.style.cursor = "no-drop";
+    }
+  },
+  checkTitles: function(event) {
+    event.target.value = event.target.value.replace(/[^_\W]+/g, '');
+  },
+  checkAmounts: function(event) {
+    event.target.value = event.target.value.replace(/[^0-9.]/g, '');
   }
 };
 
@@ -177,17 +200,15 @@ startBtn.addEventListener("click",appData.start);
 plus1.addEventListener("click",appData.addIncomesBlock);
 plus2.addEventListener("click",appData.addExpensesBlock);
 periodSelect.addEventListener("input",appData.setPeriod);
-salaryAmount.addEventListener("input",function() {
-  if (salaryAmount.value.trim() !== "") {
-    startBtn.disabled = "false";
-    startBtn.style.cursor = "pointer";
-  } else {
-    startBtn.disabled = "true";
-    startBtn.style.cursor = "no-drop";
-  }
-})
+salaryAmount.addEventListener("input",appData.blokedStartBtn);
+inputsTitle.forEach(function(item) {
+  item.addEventListener("input",appData.checkTitles);
+});
+inputsAmount.forEach(function(item) {
+  item.addEventListener("input",appData.checkAmounts);
+});
 
-startBtn.disabled = "true";
+startBtn.setAttribute("disabled","true");
 startBtn.style.cursor = "no-drop";
 
 
