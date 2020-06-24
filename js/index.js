@@ -66,6 +66,8 @@ let appData = {
   addIncomesBlock: function() {
     let cloneIncomeItem = incomeItems[0].cloneNode(true);
     incomeItems[0].parentNode.insertBefore(cloneIncomeItem, plus1);
+    inputs[0].addEventListener("input",appData.checkTitles);
+    inputs[1].addEventListener("input",appData.checkAmounts);
     incomeItems = document.querySelectorAll(".income-items");
     if(incomeItems.length === 3) {
       plus1.style.display = "none";
@@ -74,6 +76,8 @@ let appData = {
   addExpensesBlock: function() {
     let cloneExpensesItem = expensesItems[0].cloneNode(true);
     expensesItems[0].parentNode.insertBefore(cloneExpensesItem, plus2);
+    inputs[0].addEventListener("input",appData.checkTitles);
+    inputs[1].addEventListener("input",appData.checkAmounts);
     expensesItems = document.querySelectorAll(".expenses-items");
     if(expensesItems.length === 3) {
       plus2.style.display = "none";
