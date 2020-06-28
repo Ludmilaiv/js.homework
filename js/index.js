@@ -42,11 +42,9 @@ class AppData {
 
   start() {
     this.budget = +salaryAmount.value;
-    this.getExpenses();
-    this.getIncome();
+    this.getExpInc();
     this.getExpensesMonth();
-    this.getAddExpenses();
-    this.getAddIncome();
+    this.getAddExpInc()
     this.getBudget();
     this.showResult();
   }
@@ -93,51 +91,38 @@ class AppData {
     }
   };
 
-  getIncome() {
-    const _this = this;
-    incomeItems.forEach(function(item) {
-      const itemIncome = item.querySelector(".income-title").value;
-      const amountIncome = +item.querySelector(".income-amount").value;
-      if (itemIncome !== "" && amountIncome !== "") {
-        _this.income[itemIncome] = amountIncome;
+  getExpInc() {
+    const count = item => {
+      const startStr = item.className.split("-")[0];
+      const itemTitle = item.querySelector(`.${startStr}-title`).value;
+      const itemAmount = +item.querySelector(`.${startStr}-amount`).value;
+      if (itemTitle !== "" && itemAmount !== "") {
+        this[startStr][itemTitle] = itemAmount;
       }
-    });
+    };
+    expensesItems.forEach(count);
+    incomeItems.forEach(count);
     for (let key in this.income) {
       this.incomeMonths += +this.income[key];
     }
-  };
+  }
 
-  getExpenses() {
+  getAddExpInc() {
     const _this = this;
-    expensesItems.forEach(function(item) {
-      const itemExpenses = item.querySelector(".expenses-title").value;
-      const cashExpenses = +item.querySelector(".expenses-amount").value;
-      if (itemExpenses !== "" && cashExpenses !== "") {
-        _this.expenses[itemExpenses] = cashExpenses;
-      }
-    });
-  };
-
-  getAddExpenses() {
-    const _this = this;
-    let addExpenses = addExpensesItem.value.split(",")
-    addExpenses.forEach(function(item) {
+    const count = function(item) {
       item = item.trim();
       if (item !== "") {
-        _this.addExpenses.push(item);
+        _this[this].push(item);
       }
+    } 
+    const addExp = addExpensesItem.value.split(",");
+    const addInc = [];
+    additionalIncomes.forEach((item) => {
+      addInc.push(item.value);
     });
-  };
-
-  getAddIncome() {
-    const _this = this;
-    additionalIncomes.forEach(function(item) {
-      let itemValue = item.value.trim();
-      if (itemValue !== "") {
-        _this.addIncome.push(itemValue);
-      }
-    });
-  };
+    addInc.forEach(count,"addIncome");
+    addExp.forEach(count,"addExpenses");
+  }
 
   getExpensesMonth() {
     let sum = 0;
