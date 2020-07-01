@@ -52,6 +52,31 @@ class AppData {
     this.showResult();
   }
 
+  saveResults() {
+    localStorage.setItem("period", periodSelect.value);
+    for (let item in results) {
+      if (results[item].value) {
+        localStorage.setItem("result"+item, results[item].value);
+      }
+      localStorage.setItem("isLoad",true);
+    }
+  }
+
+  loadResults() {
+    if (localStorage.getItem("isLoad")) {
+      periodSelect.value = localStorage.getItem("period");
+      this.setPeriod();
+      this.blokedDataInputs();
+      periodSelect.setAttribute("disabled","true");
+      for (let item in results) {
+        let res = localStorage.getItem("result"+item)
+        if (res) {
+          results[item].value = res;
+        }
+      }
+    } 
+  }
+
   showResult() {
     const _this = this;
     results[0].value = this.budgetMonth;
@@ -59,10 +84,14 @@ class AppData {
     results[2].value = this.expensesMonth;
     results[3].value = this.addIncome.join(", ")
     results[4].value = this.addExpenses.join(", ");
-    results[6].value = Math.ceil(this.getTargetMonth());
     results[5].value = this.calcPeriod();
+    results[6].value = Math.ceil(this.getTargetMonth());
+
+    this.saveResults();
+
     periodSelect.addEventListener("input",function() {
       results[5].value = _this.calcPeriod();
+      _this.saveResults();
     });
   };
 
@@ -177,12 +206,14 @@ class AppData {
     dataInputs.forEach(function(item) {
       item.setAttribute("disabled","true");
     });
-    this.style.display = "none";
+    startBtn.style.display = "none";
     cancelBtn.style.display = "block";
   };
 
   reset() {
+    localStorage.clear();
     location.reload();
+    periodSelect.removeAttribute("disabled");
   };
 
   getInfoDeposit() {
@@ -249,6 +280,7 @@ class AppData {
 };
 
 const appData = new AppData();
+appData.loadResults();
 appData.eventListenners();
 console.log(appData)
 
